@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <!-- Registered Trademark symbol at top right -->
+  <g transform="translate(435, 30)">
+    <circle cx="20" cy="20" r="18" fill="none" stroke="#333333" stroke-width="4"/>
+    <text x="20" y="27" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">R</text>
+  </g>
+
+  <!-- Outer Orange Circle Ring -->
+  <circle cx="250" cy="260" r="225" fill="#FFFFFF" stroke="#EB7344" stroke-width="22"/>
+
+  <!-- Main stylized "mt" lettering -->
+  <g fill="#257335">
+    <!-- Letter m -->
+    <path d="M 135 345 C 115 345 100 325 105 295 L 135 195 C 142 175 160 165 185 165 C 208 165 224 176 235 198 C 248 175 272 165 298 165 C 330 165 352 182 352 218 C 352 225 350 234 347 244 L 328 305 C 322 325 330 335 350 335 C 368 335 390 320 400 305 C 404 316 398 332 388 338 C 368 350 338 352 315 352 C 275 352 258 332 264 298 L 285 228 C 288 218 288 212 284 208 C 278 202 266 202 254 214 C 242 226 230 248 220 282 L 202 342 C 196 348 185 352 172 352 C 158 352 148 348 144 340 L 165 268 C 172 244 175 228 175 218 C 175 210 170 205 160 205 C 148 205 132 220 120 255 L 102 315 C 98 330 108 345 135 345 Z" />
+    
+    <!-- Letter t crossbar & stem -->
+    <path d="M 330 162 C 342 162 352 152 358 138 C 368 115 390 100 410 100 C 425 100 435 110 430 125 C 424 140 408 152 392 160 L 442 160 C 452 160 458 170 454 182 C 450 194 440 200 425 200 L 372 200 L 340 310 C 332 338 350 348 375 348 C 392 348 408 340 415 330 C 420 340 415 355 402 362 C 382 372 355 372 330 368 C 290 362 278 335 288 295 L 315 200 L 290 200 C 280 200 274 190 278 178 C 282 166 292 160 305 160 L 325 160 L 330 162 Z" />
+  </g>
+
+  <!-- Brand text "mansha texo" -->
+  <g fill="#257335" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-style="italic">
+    <!-- Stylized script-like text -->
+    <text x="250" y="405" font-size="44" letter-spacing="3" text-anchor="middle">mansha texo</text>
+  </g>
+
+  <!-- Underline under mansha texo -->
+  <rect x="120" y="420" width="260" height="7" rx="3.5" fill="#257335" />
+</svg>

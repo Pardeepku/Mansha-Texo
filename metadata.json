@@ -1,0 +1,6 @@
+{
+  "name": "Mansha Texo — Premium Home Textiles & Floor Furnishings",
+  "description": "Shop premium bath mats, luxury carpets, rugs, kitchen mats, runner mats, and door mats from Mansha Texo. Quality Indian craftsmanship for modern living spaces.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
