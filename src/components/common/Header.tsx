@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   ChevronDown,
+  ChevronLeft,
   Shield,
   Truck,
   Sparkles,
@@ -24,14 +25,14 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
-  const { cartCount, wishlist, user, isAdmin, settings, setIsCartDrawerOpen, setIsSearchOpen } = useStore();
+  const { cartCount, wishlist, user, isAdmin, settings, categories, setIsCartDrawerOpen, setIsSearchOpen } = useStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -61,18 +62,111 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const isHome = currentPath === '/' || currentPath === '';
+
+  // Mobile App screen title calculation
+  const getMobileTitle = (path: string): string => {
+    const [pathOnly] = path.split('?');
+    if (pathOnly.startsWith('/product/')) return 'Product Details';
+    if (pathOnly.startsWith('/category/')) {
+      const slug = pathOnly.replace('/category/', '');
+      const cat = categories.find((c) => c.slug === slug);
+      return cat ? cat.name : 'Category';
+    }
+    if (pathOnly === '/shop') return 'All Furnishings';
+    if (pathOnly === '/cart') return 'Shopping Bag';
+    if (pathOnly === '/checkout') return 'Checkout';
+    if (pathOnly.startsWith('/order-success')) return 'Order Confirmed';
+    if (pathOnly.startsWith('/track-order')) return 'Track Parcel';
+    if (pathOnly === '/wishlist') return 'Saved Wishlist';
+    if (pathOnly.startsWith('/account')) return 'My Account';
+    if (pathOnly === '/new-arrivals') return 'New Arrivals';
+    if (pathOnly === '/best-sellers') return 'Best Sellers';
+    if (pathOnly === '/offers') return 'Deals & Offers';
+    if (pathOnly === '/faq') return 'Help & FAQ';
+    if (pathOnly === '/about') return 'About Us';
+    if (pathOnly === '/contact') return 'Contact Us';
+    if (pathOnly === '/shipping-policy') return 'Shipping Policy';
+    if (pathOnly === '/returns') return 'Return Policy';
+    if (pathOnly === '/privacy') return 'Privacy Policy';
+    if (pathOnly === '/terms') return 'Terms of Service';
+    return settings.storeName || 'Mansha Texo';
+  };
+
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md transition-shadow duration-300">
-      {/* Top Announcement */}
-      <AnnouncementBar onNavigate={handleNav} />
+      {/* Top Announcement Bar (Shown on desktop & home screen) */}
+      <div className={isHome ? 'block' : 'hidden lg:block'}>
+        <AnnouncementBar onNavigate={handleNav} />
+      </div>
 
-      {/* Main Header Container */}
+      {/* MOBILE APP SUBPAGE HEADER (When not on Home) */}
+      {!isHome && (
+        <div className="lg:hidden flex items-center justify-between px-2.5 py-2.5 bg-white border-b border-gray-100 shadow-xs">
+          <div className="flex items-center gap-1 min-w-0">
+            <button
+              onClick={() => {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  handleNav('/');
+                }
+              }}
+              className="p-2 -ml-1 text-gray-700 hover:text-[#257335] active:scale-90 rounded-full transition-transform cursor-pointer"
+              aria-label="Go Back"
+            >
+              <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+            </button>
+            <h1 className="text-sm font-bold text-gray-900 truncate max-w-[210px]">
+              {getMobileTitle(currentPath)}
+            </h1>
+          </div>
+
+          <div className="flex items-center gap-1 flex-shrink-0">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2 text-gray-700 hover:text-[#257335] rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+
+            <button
+              onClick={() => handleNav('/wishlist')}
+              className="relative p-2 text-gray-700 hover:text-[#E87244] rounded-full hover:bg-orange-50 transition-colors cursor-pointer"
+              aria-label="Wishlist"
+            >
+              <Heart className="w-5 h-5" />
+              {wishlist.length > 0 && (
+                <span className="absolute top-1 right-1 w-4 h-4 bg-[#E87244] text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-xs">
+                  {wishlist.length}
+                </span>
+              )}
+            </button>
+
+            <button
+              onClick={() => setIsCartDrawerOpen(true)}
+              className="relative p-2 text-[#257335] hover:text-[#1E5C2B] rounded-full hover:bg-emerald-50 transition-colors cursor-pointer"
+              aria-label="View Cart"
+            >
+              <ShoppingBag className="w-5 h-5 stroke-[2.2]" />
+              {cartCount > 0 && (
+                <span className="absolute top-1 right-1 w-4 h-4 bg-[#257335] text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-xs animate-scaleIn">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* MAIN HEADER CONTAINER (Desktop always, Mobile on Home) */}
       <div
         className={`border-b border-gray-100 transition-all duration-200 ${
-          isScrolled ? 'shadow-sm py-2.5' : 'py-3.5'
-        }`}
+          !isHome ? 'hidden lg:block' : ''
+        } ${isScrolled ? 'shadow-xs py-2 sm:py-2.5' : 'py-2.5 sm:py-3.5'}`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-3 sm:gap-4">
           {/* Mobile Hamburger Button */}
           <button
             type="button"
@@ -109,7 +203,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
           </div>
 
           {/* Right Action Icons (Track, Admin link, Account, Wishlist, Cart) */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
+          <div className="flex items-center gap-1 sm:gap-2.5">
             {/* Quick Track Order icon link */}
             <button
               onClick={() => handleNav('/track-order')}
@@ -120,7 +214,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
               <span className="hidden xl:inline">Track Order</span>
             </button>
 
-            {/* Admin Dashboard Quick Link (visible or highlighted) */}
+            {/* Admin Dashboard Quick Link */}
             <button
               onClick={() => handleNav('/admin')}
               className={`flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold rounded-full transition-all cursor-pointer ${
@@ -132,15 +226,6 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
             >
               <Shield className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Admin</span>
-            </button>
-
-            {/* Mobile Search Icon */}
-            <button
-              onClick={() => setIsSearchOpen(true)}
-              className="md:hidden p-2 text-gray-700 hover:text-[#257335] rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
-              aria-label="Search"
-            >
-              <Search className="w-5 h-5" />
             </button>
 
             {/* Wishlist Button */}
@@ -219,31 +304,31 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
                       </div>
                       <button
                         onClick={() => handleNav('/account')}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-[#257335] flex items-center gap-2"
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-[#257335] flex items-center gap-2 cursor-pointer"
                       >
                         <User className="w-4 h-4" /> My Profile
                       </button>
                       <button
-                        onClick={() => handleNav('/account/orders')}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-[#257335] flex items-center gap-2"
+                        onClick={() => handleNav('/account?tab=orders')}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-[#257335] flex items-center gap-2 cursor-pointer"
                       >
                         <PackageCheck className="w-4 h-4" /> My Orders
                       </button>
                       <button
                         onClick={() => handleNav('/track-order')}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-[#257335] flex items-center gap-2"
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-[#257335] flex items-center gap-2 cursor-pointer"
                       >
                         <Truck className="w-4 h-4" /> Track Order
                       </button>
                       <button
                         onClick={() => handleNav('/admin')}
-                        className="w-full text-left px-4 py-2 text-sm text-emerald-800 font-medium hover:bg-emerald-100/60 flex items-center gap-2 border-t border-gray-50 mt-1"
+                        className="w-full text-left px-4 py-2 text-sm text-emerald-800 font-medium hover:bg-emerald-100/60 flex items-center gap-2 border-t border-gray-50 mt-1 cursor-pointer"
                       >
                         <Shield className="w-4 h-4 text-[#257335]" /> Admin Dashboard
                       </button>
                       <button
                         onClick={() => handleNav('/account')}
-                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 border-t border-gray-100 mt-1"
+                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 border-t border-gray-100 mt-1 cursor-pointer"
                       >
                         <LogOut className="w-4 h-4" /> Sign Out
                       </button>
@@ -257,14 +342,14 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
                       <div className="px-3 py-1.5">
                         <button
                           onClick={() => handleNav('/account')}
-                          className="w-full py-2 bg-[#257335] hover:bg-[#1E5C2B] text-white text-xs font-semibold rounded-lg shadow-sm transition-colors text-center"
+                          className="w-full py-2 bg-[#257335] hover:bg-[#1E5C2B] text-white text-xs font-semibold rounded-lg shadow-sm transition-colors text-center cursor-pointer"
                         >
                           Sign In / Register
                         </button>
                       </div>
                       <button
                         onClick={() => handleNav('/admin')}
-                        className="w-full text-left px-4 py-2 text-xs text-gray-600 hover:bg-emerald-50 hover:text-[#257335] flex items-center gap-2 border-t border-gray-100 mt-1"
+                        className="w-full text-left px-4 py-2 text-xs text-gray-600 hover:bg-emerald-50 hover:text-[#257335] flex items-center gap-2 border-t border-gray-100 mt-1 cursor-pointer"
                       >
                         <Shield className="w-3.5 h-3.5" /> Admin Portal
                       </button>
@@ -275,6 +360,25 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
             </div>
           </div>
         </div>
+
+        {/* MOBILE APP IN-HEADER SEARCH BAR (Only on mobile home view) */}
+        {isHome && (
+          <div className="lg:hidden px-3 pt-2.5 pb-0.5">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="w-full flex items-center justify-between px-3.5 py-2.5 bg-gray-100/80 active:bg-gray-200/80 border border-gray-200/80 rounded-2xl text-xs text-gray-500 shadow-inner transition-colors cursor-pointer"
+              aria-label="Search items"
+            >
+              <div className="flex items-center gap-2.5">
+                <Search className="w-4 h-4 text-[#257335]" />
+                <span className="text-gray-500 font-normal">Search bath mats, rugs, carpets...</span>
+              </div>
+              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md">
+                Search
+              </span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Desktop Secondary Category Navigation Bar */}
@@ -311,40 +415,81 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
         </div>
       </nav>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer Menu (Sidebar) */}
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 z-50 flex">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-xs"
+            className="fixed inset-0 bg-black/50 backdrop-blur-xs animate-fadeIn"
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
           {/* Content panel */}
-          <div className="relative w-4/5 max-w-sm bg-white h-full shadow-2xl flex flex-col justify-between overflow-y-auto">
+          <div className="relative w-4/5 max-w-sm bg-white h-full shadow-2xl flex flex-col justify-between overflow-y-auto z-10 animate-slideRight">
             <div>
-              <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-                <Logo size="sm" />
+              {/* Drawer User Card */}
+              <div className="p-4 bg-gradient-to-r from-[#18241F] to-[#257335] text-white flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  {user?.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.name}
+                      className="w-10 h-10 rounded-full object-cover ring-2 ring-white/50"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-white/20 text-white font-bold flex items-center justify-center">
+                      {user ? user.name.charAt(0).toUpperCase() : <User className="w-5 h-5" />}
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-xs font-bold text-white">
+                      {user ? `Hello, ${user.name}` : 'Welcome, Guest!'}
+                    </p>
+                    <p className="text-[11px] text-emerald-200">
+                      {user ? user.email : 'Sign in to track orders'}
+                    </p>
+                  </div>
+                </div>
+
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-1.5 text-gray-400 hover:text-gray-700 rounded-md"
+                  className="p-1.5 text-white/80 hover:text-white rounded-lg cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
+              {/* Quick Actions Bar */}
+              <div className="grid grid-cols-2 gap-2 p-3 bg-gray-50 border-b border-gray-100 text-xs">
+                <button
+                  onClick={() => handleNav('/track-order')}
+                  className="p-2.5 bg-white rounded-xl border border-gray-200 flex items-center gap-2 font-bold text-gray-800 shadow-xs cursor-pointer"
+                >
+                  <Truck className="w-4 h-4 text-[#257335]" />
+                  <span>Track Parcel</span>
+                </button>
+                <button
+                  onClick={() => handleNav('/wishlist')}
+                  className="p-2.5 bg-white rounded-xl border border-gray-200 flex items-center gap-2 font-bold text-gray-800 shadow-xs cursor-pointer"
+                >
+                  <Heart className="w-4 h-4 text-[#E87244]" />
+                  <span>Wishlist ({wishlist.length})</span>
+                </button>
+              </div>
+
+              {/* Navigation Links */}
               <div className="p-4">
-                <p className="text-[11px] font-bold tracking-wider text-gray-400 uppercase mb-2">
-                  Navigation
+                <p className="text-[10px] font-bold tracking-wider text-gray-400 uppercase mb-2">
+                  Shop Categories
                 </p>
                 <div className="space-y-1">
                   {activeNavLinks.map((link) => (
                     <button
                       key={link.id || link.path}
                       onClick={() => handleNav(link.path)}
-                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left cursor-pointer ${
+                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-colors text-left cursor-pointer ${
                         currentPath === link.path
-                          ? 'bg-emerald-50 text-[#257335] font-semibold'
+                          ? 'bg-emerald-50 text-[#257335] font-bold'
                           : 'text-gray-700 hover:bg-gray-50'
                       }`}
                     >
@@ -359,45 +504,47 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
                 </div>
               </div>
 
+              {/* Support & Admin */}
               <div className="p-4 border-t border-gray-100">
-                <p className="text-[11px] font-bold tracking-wider text-gray-400 uppercase mb-2">
-                  Support & Account
+                <p className="text-[10px] font-bold tracking-wider text-gray-400 uppercase mb-2">
+                  Customer Support
                 </p>
                 <div className="space-y-1 text-sm">
                   <button
-                    onClick={() => handleNav('/track-order')}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg text-left"
+                    onClick={() => handleNav('/faq')}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg text-left cursor-pointer"
                   >
-                    <Truck className="w-4 h-4 text-[#257335]" /> Track Order
-                  </button>
-                  <button
-                    onClick={() => handleNav('/account')}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg text-left"
-                  >
-                    <User className="w-4 h-4 text-[#257335]" /> My Account
-                  </button>
-                  <button
-                    onClick={() => handleNav('/about')}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg text-left"
-                  >
-                    About {settings.storeName}
+                    Help & FAQs
                   </button>
                   <button
                     onClick={() => handleNav('/contact')}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg text-left"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg text-left cursor-pointer"
                   >
-                    Contact Support
+                    Contact Us
+                  </button>
+                  <button
+                    onClick={() => handleNav('/shipping-policy')}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg text-left cursor-pointer"
+                  >
+                    Shipping & Delivery
+                  </button>
+                  <button
+                    onClick={() => handleNav('/returns')}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg text-left cursor-pointer"
+                  >
+                    Return & Refund Policy
                   </button>
                   <button
                     onClick={() => handleNav('/admin')}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 text-emerald-800 bg-emerald-50 rounded-lg text-left font-medium"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-emerald-800 bg-emerald-50 rounded-xl text-left font-bold cursor-pointer mt-2"
                   >
-                    <Shield className="w-4 h-4 text-[#257335]" /> Admin Dashboard
+                    <Shield className="w-4 h-4 text-[#257335]" /> Store Admin Portal
                   </button>
                 </div>
               </div>
             </div>
 
+            {/* Footer in Drawer */}
             <div className="p-4 border-t border-gray-100 bg-gray-50 text-xs text-gray-500">
               <p className="font-semibold text-gray-800">{settings.storeName}</p>
               <p className="mt-0.5">{settings.cityState || settings.address}</p>

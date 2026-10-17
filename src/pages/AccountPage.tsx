@@ -461,8 +461,50 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                 </div>
               </div>
 
-              {/* Navigation Tabs */}
-              <nav className="space-y-1 text-xs font-bold">
+              {/* Mobile Segmented Tab Selector */}
+              <div className="lg:hidden grid grid-cols-3 gap-1 p-1 bg-gray-100 rounded-2xl text-xs font-bold">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('profile')}
+                  className={`py-2 px-1 text-center rounded-xl transition-all cursor-pointer ${
+                    activeTab === 'profile'
+                      ? 'bg-white text-[#257335] shadow-xs font-black'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Profile
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('orders')}
+                  className={`py-2 px-1 text-center rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                    activeTab === 'orders'
+                      ? 'bg-white text-[#257335] shadow-xs font-black'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <span>Orders</span>
+                  {userOrders.length > 0 && (
+                    <span className="text-[10px] bg-emerald-100 text-[#257335] px-1.5 py-0.2 rounded-full font-bold">
+                      {userOrders.length}
+                    </span>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('addresses')}
+                  className={`py-2 px-1 text-center rounded-xl transition-all cursor-pointer ${
+                    activeTab === 'addresses'
+                      ? 'bg-white text-[#257335] shadow-xs font-black'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Addresses
+                </button>
+              </div>
+
+              {/* Navigation Tabs (Desktop) */}
+              <nav className="hidden lg:block space-y-1 text-xs font-bold">
                 <button
                   onClick={() => setActiveTab('profile')}
                   className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition-colors text-left cursor-pointer ${
@@ -517,6 +559,24 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   <LogOut className="w-4 h-4" /> Sign Out
                 </button>
               </nav>
+
+              {/* Mobile Quick Action Strip (Admin / Sign out) */}
+              <div className="lg:hidden flex items-center justify-between pt-2 border-t border-gray-100 text-xs">
+                {isAdmin && (
+                  <button
+                    onClick={() => onNavigate('/admin')}
+                    className="text-xs font-bold text-[#257335] hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <Shield className="w-3.5 h-3.5" /> Admin Portal
+                  </button>
+                )}
+                <button
+                  onClick={logoutUser}
+                  className="text-xs font-bold text-red-600 hover:underline flex items-center gap-1 cursor-pointer ml-auto"
+                >
+                  <LogOut className="w-3.5 h-3.5" /> Sign Out
+                </button>
+              </div>
             </div>
           </div>
 

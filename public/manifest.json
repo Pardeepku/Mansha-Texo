@@ -1,0 +1,21 @@
+{
+  "id": "/",
+  "name": "Mansha Texo — Premium Home Textiles & Furnishings",
+  "short_name": "Mansha Texo",
+  "description": "Shop luxury bath mats, carpets, rugs, kitchen mats, and door mats handcrafted with premium Indian textiles.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF8F5",
+  "theme_color": "#257335",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "192x192 512x512 500x500",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

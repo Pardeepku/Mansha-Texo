@@ -39,27 +39,27 @@ export const WishlistPage: React.FC<WishlistPageProps> = ({ onNavigate }) => {
   }
 
   return (
-    <div className="bg-[#FAF8F5] min-h-screen py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+    <div className="bg-[#FAF8F5] min-h-screen py-4 sm:py-12 pb-24 lg:pb-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex flex-row items-center justify-between mb-5 sm:mb-8 gap-2">
           <div>
-            <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-gray-900">
-              My Saved Wishlist ({wishlistProducts.length})
+            <h1 className="font-serif text-xl sm:text-3xl font-extrabold text-gray-900">
+              Wishlist ({wishlistProducts.length})
             </h1>
-            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+            <p className="hidden sm:block text-xs sm:text-sm text-gray-500 mt-1">
               Your favorite home furnishings curated for quick checkout.
             </p>
           </div>
 
           <button
             onClick={handleAddAllToCart}
-            className="px-5 py-2.5 bg-[#257335] hover:bg-[#1E5C2B] text-white text-xs font-bold rounded-xl shadow-sm transition-colors flex items-center gap-2 cursor-pointer self-start sm:self-auto"
+            className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-[#257335] active:bg-[#1E5C2B] text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
           >
-            <ShoppingBag className="w-4 h-4" /> Move All to Cart
+            <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Move All to Cart
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {wishlistProducts.map((product) => (
             <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
           ))}

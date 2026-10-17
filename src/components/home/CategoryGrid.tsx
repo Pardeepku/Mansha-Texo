@@ -36,13 +36,13 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ onNavigate }) => {
           </button>
         </div>
 
-        {/* Category Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Category Cards Grid - 2 Column on mobile */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {categories.map((category) => (
             <div
               key={category.id}
               onClick={() => onNavigate(`/category/${category.slug}`)}
-              className="group relative h-80 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer bg-gray-900"
+              className="group relative h-44 sm:h-80 rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer bg-gray-900 active:scale-[0.98]"
             >
               {/* Image */}
               <img
@@ -52,30 +52,30 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ onNavigate }) => {
               />
 
               {/* Dark Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
               {/* Content Box */}
-              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
-                <div className="transform transition-transform duration-300 group-hover:-translate-y-2">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-300">
-                      {category.itemCount} Designs Available
+              <div className="absolute inset-0 p-3 sm:p-6 flex flex-col justify-end text-white">
+                <div className="transform transition-transform duration-300 group-hover:-translate-y-1">
+                  <div className="flex items-center justify-between mb-0.5 sm:mb-1.5">
+                    <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-wider text-emerald-300">
+                      {category.itemCount} Designs
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-white leading-snug">
+                  <h3 className="font-serif text-sm sm:text-2xl font-bold text-white leading-tight">
                     {category.name}
                   </h3>
 
-                  <p className="text-xs text-gray-300 mt-1 line-clamp-2 leading-relaxed opacity-90">
+                  <p className="hidden sm:block text-xs text-gray-300 mt-1 line-clamp-2 leading-relaxed opacity-90">
                     {category.description}
                   </p>
                 </div>
 
                 {/* Explore button pill */}
-                <div className="pt-3 flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#E87244] group-hover:text-white uppercase tracking-wider transition-colors">
-                    Explore Collection <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <div className="pt-1.5 sm:pt-3 flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold text-[#E87244] group-hover:text-white uppercase tracking-wider transition-colors">
+                    Explore <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
               </div>

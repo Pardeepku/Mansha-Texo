@@ -248,6 +248,53 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
             </div>
           </div>
+
+          {/* Quick-Filter Horizontal Chips Bar on Mobile */}
+          <div className="lg:hidden flex items-center gap-2 overflow-x-auto no-scrollbar py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0">
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 ${
+                selectedCategory === 'all'
+                  ? 'bg-[#257335] text-white shadow-xs'
+                  : 'bg-white border border-gray-200 text-gray-700'
+              }`}
+            >
+              All Items ({products.length})
+            </button>
+            {categories.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => setSelectedCategory(c.slug)}
+                className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 ${
+                  selectedCategory === c.slug
+                    ? 'bg-[#257335] text-white shadow-xs'
+                    : 'bg-white border border-gray-200 text-gray-700'
+                }`}
+              >
+                {c.name}
+              </button>
+            ))}
+            <button
+              onClick={() => setMaxPrice(maxPrice === 999 ? 10000 : 999)}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 ${
+                maxPrice === 999
+                  ? 'bg-[#E87244] text-white shadow-xs'
+                  : 'bg-white border border-gray-200 text-gray-700'
+              }`}
+            >
+              Under ₹999 {maxPrice === 999 && '✓'}
+            </button>
+            <button
+              onClick={() => setInStockOnly(!inStockOnly)}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 ${
+                inStockOnly
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'bg-white border border-gray-200 text-gray-700'
+              }`}
+            >
+              In Stock Only {inStockOnly && '✓'}
+            </button>
+          </div>
         </div>
 
         {/* Main Content Layout (Sidebar Filters + Products Grid) */}
@@ -457,8 +504,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               <div
                 className={
                   layout === 'grid'
-                    ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6'
-                    : 'space-y-4'
+                    ? 'grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6'
+                    : 'space-y-3 sm:space-y-4'
                 }
               >
                 {sortedProducts.map((product) => (
@@ -471,7 +518,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-3xl p-12 text-center border border-gray-100 shadow-sm">
+              <div className="bg-white rounded-3xl p-8 sm:p-12 text-center border border-gray-100 shadow-sm">
                 <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto text-[#E87244] mb-4">
                   <Search className="w-8 h-8" />
                 </div>
@@ -491,33 +538,39 @@ export const ShopPage: React.FC<ShopPageProps> = ({
         </div>
       </div>
 
-      {/* Mobile Filters Modal */}
+      {/* Mobile Filters Bottom Sheet */}
       {isMobileFiltersOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-xs">
-          <div className="w-4/5 max-w-sm bg-white h-full shadow-2xl flex flex-col justify-between overflow-hidden">
-            <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-              <h3 className="text-sm font-bold text-gray-900">Filters</h3>
+        <div className="lg:hidden fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-xs">
+          <div className="w-full max-w-lg bg-white rounded-t-3xl max-h-[85vh] shadow-2xl flex flex-col justify-between overflow-hidden animate-slideUp">
+            {/* Grab handle */}
+            <div className="w-10 h-1 bg-gray-300 rounded-full mx-auto mt-2.5" />
+
+            <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-bold text-gray-900">Filters</h3>
+                <p className="text-[11px] text-gray-500">Refine by category, price & availability</p>
+              </div>
               <button
                 onClick={() => setIsMobileFiltersOpen(false)}
-                className="p-1 text-gray-400 hover:text-gray-700"
+                className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-4 overflow-y-auto space-y-6 flex-1">
+            <div className="p-5 overflow-y-auto space-y-5 flex-1">
               {/* Category */}
               <div>
-                <label className="block text-xs font-bold uppercase text-gray-700 mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
                   Category
                 </label>
-                <div className="space-y-1 text-xs">
+                <div className="grid grid-cols-2 gap-1.5 text-xs">
                   <button
                     onClick={() => setSelectedCategory('all')}
-                    className={`w-full text-left px-2.5 py-1.5 rounded-lg ${
+                    className={`text-left px-3 py-2 rounded-xl border transition-colors cursor-pointer ${
                       selectedCategory === 'all'
-                        ? 'bg-emerald-50 text-[#257335] font-bold'
-                        : 'text-gray-700'
+                        ? 'border-[#257335] bg-emerald-50 text-[#257335] font-bold'
+                        : 'border-gray-200 text-gray-700 bg-white'
                     }`}
                   >
                     All Categories
@@ -526,10 +579,10 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                     <button
                       key={c.id}
                       onClick={() => setSelectedCategory(c.slug)}
-                      className={`w-full text-left px-2.5 py-1.5 rounded-lg ${
+                      className={`text-left px-3 py-2 rounded-xl border transition-colors cursor-pointer truncate ${
                         selectedCategory === c.slug
-                          ? 'bg-emerald-50 text-[#257335] font-bold'
-                          : 'text-gray-700'
+                          ? 'border-[#257335] bg-emerald-50 text-[#257335] font-bold'
+                          : 'border-gray-200 text-gray-700 bg-white'
                       }`}
                     >
                       {c.name}
@@ -551,34 +604,38 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                   step="100"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="w-full accent-[#257335]"
+                  className="w-full accent-[#257335] cursor-pointer"
                 />
+                <div className="flex justify-between text-[10px] text-gray-400 mt-1">
+                  <span>₹300</span>
+                  <span>₹10,000+</span>
+                </div>
               </div>
 
               {/* Stock */}
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 p-3 bg-gray-50 rounded-xl cursor-pointer">
                 <input
                   type="checkbox"
                   checked={inStockOnly}
                   onChange={(e) => setInStockOnly(e.target.checked)}
-                  className="rounded text-[#257335]"
+                  className="rounded text-[#257335] w-4 h-4 cursor-pointer"
                 />
-                <span className="text-xs font-semibold text-gray-700">In Stock Only</span>
+                <span className="text-xs font-semibold text-gray-800">Only In Stock Items</span>
               </label>
             </div>
 
-            <div className="p-4 border-t border-gray-100 bg-gray-50 flex gap-2">
+            <div className="p-4 border-t border-gray-100 bg-gray-50 flex gap-2.5 pb-[max(1rem,env(safe-area-inset-bottom))]">
               <button
                 onClick={handleResetFilters}
-                className="flex-1 py-2.5 border border-gray-300 text-gray-700 text-xs font-bold rounded-xl"
+                className="flex-1 py-3 border border-gray-300 text-gray-700 text-xs font-bold rounded-xl cursor-pointer"
               >
-                Reset
+                Reset All
               </button>
               <button
                 onClick={() => setIsMobileFiltersOpen(false)}
-                className="flex-1 py-2.5 bg-[#257335] text-white text-xs font-bold rounded-xl"
+                className="flex-1 py-3 bg-[#257335] text-white text-xs font-bold rounded-xl shadow-md cursor-pointer"
               >
-                Apply Filters
+                Apply Filters ({sortedProducts.length})
               </button>
             </div>
           </div>

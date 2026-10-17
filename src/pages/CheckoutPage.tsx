@@ -177,8 +177,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
   };
 
   return (
-    <div className="bg-[#FAF8F5] min-h-screen py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#FAF8F5] min-h-screen py-4 sm:py-12 pb-28 lg:pb-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2 mb-8">
           <Lock className="w-5 h-5 text-[#257335]" />
           <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-gray-900">
@@ -652,6 +652,31 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 <span>Verified SSL Payment Gateway</span>
               </div>
             </div>
+          </div>
+
+          {/* Mobile Sticky Place Order Bar */}
+          <div className="lg:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-gray-200/90 px-4 py-2.5 z-40 shadow-[0_-4px_25px_rgba(0,0,0,0.12)] flex items-center justify-between gap-3 pb-[max(0.6rem,env(safe-area-inset-bottom))]">
+            <div>
+              <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold block">Payable Amount</span>
+              <span className="text-base font-black text-gray-900">
+                ₹{finalTotal.toLocaleString('en-IN')}
+              </span>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="px-5 py-2.5 bg-[#257335] active:bg-[#1E5C2B] disabled:bg-gray-400 text-white rounded-xl font-bold text-xs shadow-md flex items-center gap-1.5 cursor-pointer"
+            >
+              {isSubmitting ? (
+                <span>Processing...</span>
+              ) : (
+                <>
+                  <span>Place Order</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
           </div>
         </form>
       </div>

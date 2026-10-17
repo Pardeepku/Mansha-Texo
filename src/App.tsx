@@ -8,6 +8,7 @@ import { WhatsAppButton } from './components/common/WhatsAppButton';
 import { SearchModal } from './components/common/SearchModal';
 import { QuickViewModal } from './components/common/QuickViewModal';
 import { CartDrawer } from './components/common/CartDrawer';
+import { MobileAppBottomNav } from './components/common/MobileAppBottomNav';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -90,6 +91,10 @@ const AppContent: React.FC = () => {
     if (pathOnly.startsWith('/category/')) {
       const categorySlug = pathOnly.replace('/category/', '');
       return <ShopPage initialCategory={categorySlug} onNavigate={navigate} />;
+    }
+
+    if (pathOnly === '/categories') {
+      return <ShopPage onNavigate={navigate} />;
     }
 
     if (pathOnly.startsWith('/product/')) {
@@ -190,24 +195,26 @@ const AppContent: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1E293B]">
       {/* Show Header & Navigation when not in Admin Mode */}
       {!isAdminView && (
-        <>
-          <AnnouncementBar onNavigate={navigate} />
-          <Header
-            onNavigate={navigate}
-            onOpenSearch={() => setIsSearchOpen(true)}
-            onOpenCart={() => setIsCartDrawerOpen(true)}
-            currentPath={currentPath}
-          />
-        </>
+        <Header
+          onNavigate={navigate}
+          currentPath={currentPath}
+        />
       )}
 
-      {/* Main Page Body */}
-      <main className="flex-1">
+      {/* Main Page Body with bottom clearance on mobile for bottom navigation */}
+      <main className={`flex-1 ${!isAdminView ? 'pb-16 lg:pb-0' : ''}`}>
         {renderRoute()}
       </main>
 
       {/* Footer when not in Admin Mode */}
       {!isAdminView && <Footer onNavigate={navigate} />}
+
+      {/* Native Mobile App Bottom Navigation Bar (Hidden in Admin, Checkout, and Order Confirmation) */}
+      {!isAdminView &&
+        !currentPath.startsWith('/checkout') &&
+        !currentPath.startsWith('/order-success') && (
+          <MobileAppBottomNav currentPath={currentPath} onNavigate={navigate} />
+        )}
 
       {/* Global Modals & Overlays */}
       <SearchModal

@@ -14,34 +14,34 @@ export const NewArrivalsSection: React.FC<NewArrivalsSectionProps> = ({ onNaviga
     .slice(0, 8);
 
   return (
-    <section className="py-16 bg-[#FAF8F5]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-8 sm:py-16 bg-[#FAF8F5]">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+        <div className="flex flex-row items-end justify-between mb-5 sm:mb-10 gap-2">
           <div>
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E87244] mb-2">
-              <Sparkles className="w-4 h-4" />
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#E87244] mb-1">
+              <Sparkles className="w-3.5 h-3.5" />
               <span>Just Unpacked</span>
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+            <h2 className="font-serif text-xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
               Fresh New Arrivals
             </h2>
-            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+            <p className="hidden sm:block text-xs sm:text-sm text-gray-500 mt-1">
               Latest weave patterns, trendsetting botanical prints, and eco-friendly natural fibers.
             </p>
           </div>
 
           <button
             onClick={() => onNavigate('/new-arrivals')}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#257335] hover:text-[#1E5C2B] group cursor-pointer"
+            className="inline-flex items-center gap-1 text-[11px] sm:text-sm font-bold text-[#257335] hover:text-[#1E5C2B] group cursor-pointer whitespace-nowrap"
           >
-            <span>View All New Arrivals</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <span>See All</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 2-Column Mobile Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {newArrivals.map((product) => (
             <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
           ))}

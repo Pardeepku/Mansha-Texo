@@ -7,6 +7,8 @@ import { BestSellersSection } from '../components/home/BestSellersSection';
 import { PromoBannerSection } from '../components/home/PromoBannerSection';
 import { NewArrivalsSection } from '../components/home/NewArrivalsSection';
 import { CustomerReviewsSection } from '../components/home/CustomerReviewsSection';
+import { MobileCategoryStories } from '../components/home/MobileCategoryStories';
+import { PWAInstallBanner } from '../components/common/PWAInstallBanner';
 
 interface HomePageProps {
   onNavigate: (path: string) => void;
@@ -15,6 +17,12 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   return (
     <div className="w-full">
+      {/* Mobile App Install Banner */}
+      <PWAInstallBanner />
+
+      {/* Mobile Quick Category Story Rings */}
+      <MobileCategoryStories onNavigate={onNavigate} />
+
       {/* 1. Hero Banner Slider */}
       <HeroSlider onNavigate={onNavigate} />
 

@@ -36,34 +36,37 @@ export const WhyChooseSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 rounded-full text-[#257335] text-xs font-bold uppercase tracking-wider mb-2">
+    <section className="py-8 sm:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-14">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 bg-emerald-50 rounded-full text-[#257335] text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1.5">
             <HeartHandshake className="w-3.5 h-3.5" />
             <span>The Mansha Texo Difference</span>
           </div>
-          <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 tracking-tight">
+          <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 tracking-tight">
             Why Choose Mansha Texo?
           </h2>
-          <p className="text-xs sm:text-sm text-gray-500 mt-2">
+          <p className="text-xs sm:text-sm text-gray-500 mt-1">
             Every thread we weave is an uncompromising promise of luxury, durability, and Indian artisanal craftsmanship.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-6">
           {points.map((point, index) => {
             const Icon = point.icon;
+            const isLastOdd = index === points.length - 1 && points.length % 2 !== 0;
             return (
               <div
                 key={index}
-                className="p-6 rounded-2xl bg-gray-50/70 border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center group"
+                className={`p-3.5 sm:p-6 rounded-2xl bg-gray-50/70 border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center group ${
+                  isLastOdd ? 'col-span-2 sm:col-span-1' : ''
+                }`}
               >
-                <div className={`w-14 h-14 rounded-2xl ${point.color} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
-                  <Icon className="w-7 h-7" />
+                <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl ${point.color} flex items-center justify-center mb-2.5 sm:mb-4 transition-transform group-hover:scale-110`}>
+                  <Icon className="w-5 h-5 sm:w-7 sm:h-7" />
                 </div>
-                <h3 className="text-sm font-bold text-gray-900 mb-2">{point.title}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed">{point.description}</p>
+                <h3 className="text-xs sm:text-sm font-bold text-gray-900 mb-1">{point.title}</h3>
+                <p className="text-[10px] sm:text-xs text-gray-500 leading-relaxed line-clamp-2 sm:line-clamp-none">{point.description}</p>
               </div>
             );
           })}

@@ -81,9 +81,9 @@ export const CartPage: React.FC<CartPageProps> = ({ onNavigate }) => {
   }
 
   return (
-    <div className="bg-[#FAF8F5] min-h-screen py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-gray-900 mb-8">
+    <div className="bg-[#FAF8F5] min-h-screen py-4 sm:py-12 pb-28 lg:pb-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <h1 className="font-serif text-xl sm:text-3xl font-extrabold text-gray-900 mb-4 sm:mb-8">
           Shopping Cart ({cartCount} {cartCount === 1 ? 'item' : 'items'})
         </h1>
 
@@ -316,6 +316,24 @@ export const CartPage: React.FC<CartPageProps> = ({ onNavigate }) => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Mobile Sticky Bottom Checkout Bar */}
+      <div className="lg:hidden fixed bottom-14 inset-x-0 bg-white/95 backdrop-blur-md border-t border-gray-200/90 px-4 py-2.5 z-30 shadow-[0_-4px_25px_rgba(0,0,0,0.1)] flex items-center justify-between gap-3">
+        <div>
+          <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold block">Total Amount</span>
+          <span className="text-base font-black text-gray-900">
+            ₹{cartTotal.toLocaleString('en-IN')}
+          </span>
+        </div>
+
+        <button
+          onClick={() => onNavigate('/checkout')}
+          className="px-5 py-2.5 bg-[#257335] active:bg-[#1E5C2B] text-white rounded-xl font-bold text-xs shadow-md flex items-center gap-1.5 cursor-pointer"
+        >
+          <span>Checkout</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );

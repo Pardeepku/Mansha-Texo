@@ -88,7 +88,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <footer className="bg-[#19221C] text-gray-300 pt-14 pb-8 border-t-4 border-[#257335]">
+    <footer className="bg-[#19221C] text-gray-300 pt-12 sm:pt-14 pb-24 lg:pb-8 border-t-4 border-[#257335]">
       {/* Top Value Propositions */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 border-b border-gray-800">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

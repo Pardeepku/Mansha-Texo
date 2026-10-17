@@ -22,7 +22,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({
   initialOrderId,
   onNavigate,
 }) => {
-  const { orders } = useStore();
+  const { orders, addToast } = useStore();
   const [searchInput, setSearchInput] = useState(initialOrderId || '');
   const [activeOrder, setActiveOrder] = useState(() => {
     if (initialOrderId) {
@@ -59,8 +59,9 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({
     );
     if (found) {
       setActiveOrder(found);
+      addToast('success', 'Order Found', `Tracking details for order ${found.orderNumber}`);
     } else {
-      alert(`No order found matching "${searchInput}". Check your order number or phone.`);
+      addToast('error', 'Order Not Found', `No order found matching "${searchInput}". Please verify your order ID or phone.`);
     }
   };
 
@@ -93,8 +94,8 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({
   const currentStepIndex = activeOrder ? getStepIndex(activeOrderStatus) : 0;
 
   return (
-    <div className="bg-[#FAF8F5] min-h-screen py-10 sm:py-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+    <div className="bg-[#FAF8F5] min-h-screen py-6 sm:py-16 pb-28 lg:pb-16">
+      <div className="max-w-4xl mx-auto px-3 sm:px-6">
         {/* Header */}
         <div className="text-center max-w-xl mx-auto mb-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 rounded-full text-[#257335] text-xs font-bold uppercase tracking-wider mb-2">

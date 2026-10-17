@@ -45,14 +45,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300"
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+      <div className="fixed inset-y-0 right-0 max-w-full flex">
+        <div className="w-screen max-w-full sm:max-w-md bg-white shadow-2xl flex flex-col pb-[max(0.5rem,env(safe-area-inset-bottom))]">
           {/* Header */}
-          <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+          <div className="p-4 sm:p-6 border-b border-gray-100 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-[#257335]" />
-              <h2 className="font-serif text-lg font-bold text-gray-900">
-                Cart Items ({cartCount})
+              <h2 className="font-serif text-base sm:text-lg font-bold text-gray-900">
+                Bag Items ({cartCount})
               </h2>
             </div>
             <button

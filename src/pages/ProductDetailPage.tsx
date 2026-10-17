@@ -199,7 +199,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   };
 
   return (
-    <div className="bg-[#FAF8F5] min-h-screen py-8">
+    <div className="bg-[#FAF8F5] min-h-screen py-4 sm:py-8 pb-28 lg:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumbs */}
         <nav className="text-xs text-gray-500 mb-6 flex items-center gap-1.5 overflow-x-auto">
@@ -852,6 +852,46 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           </div>
         </div>
       )}
+
+      {/* Mobile Fixed Sticky Bottom Action Bar */}
+      <div className="lg:hidden fixed bottom-14 inset-x-0 bg-white/95 backdrop-blur-md border-t border-gray-200/90 px-3.5 py-2.5 z-30 shadow-[0_-4px_25px_rgba(0,0,0,0.1)] flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <div className="flex items-baseline gap-1.5 truncate">
+            <span className="text-base font-extrabold text-gray-900">
+              ₹{price.toLocaleString('en-IN')}
+            </span>
+            {mrp > price && (
+              <span className="text-xs text-gray-400 line-through">
+                ₹{mrp.toLocaleString('en-IN')}
+              </span>
+            )}
+          </div>
+          {product.discountPercentage > 0 && (
+            <span className="text-[10px] font-bold text-[#E87244]">
+              {product.discountPercentage}% OFF
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <button
+            onClick={handleAddToCart}
+            disabled={stock <= 0}
+            className="px-3.5 py-2.5 bg-emerald-50 active:bg-emerald-100 text-[#257335] border border-emerald-200 rounded-xl font-bold text-xs flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+          >
+            <ShoppingBag className="w-4 h-4" />
+            <span>{addedAnimation ? 'Added!' : 'Add to Bag'}</span>
+          </button>
+          <button
+            onClick={handleBuyNow}
+            disabled={stock <= 0}
+            className="px-4 py-2.5 bg-[#257335] active:bg-[#1E5C2B] text-white rounded-xl font-extrabold text-xs shadow-md flex items-center gap-1 cursor-pointer whitespace-nowrap"
+          >
+            <span>Buy Now</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
