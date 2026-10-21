@@ -87,7 +87,7 @@ export const PWAInstallBanner: React.FC = () => {
       {/* Mobile App Install Card / Banner */}
       <aside
         aria-label="App download prompt"
-        className="lg:hidden mx-3 my-2.5 bg-gradient-to-r from-[#18241F] via-[#203627] to-[#18241F] text-white p-3 rounded-2xl shadow-md border border-emerald-500/20 flex items-center justify-between gap-2.5 animate-fadeIn"
+        className="lg:hidden mx-2.5 sm:mx-3 my-2.5 max-w-full overflow-hidden bg-gradient-to-r from-[#18241F] via-[#203627] to-[#18241F] text-white p-3 rounded-2xl shadow-md border border-emerald-500/20 flex items-center justify-between gap-2.5 animate-fadeIn"
       >
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="w-10 h-10 rounded-xl bg-white p-1 flex-shrink-0 flex items-center justify-center shadow-xs">

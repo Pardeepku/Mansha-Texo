@@ -94,7 +94,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md transition-shadow duration-300">
+    <header className="sticky top-0 z-40 w-full max-w-full overflow-x-clip bg-white/95 backdrop-blur-md transition-shadow duration-300">
       {/* Top Announcement Bar (Shown on desktop & home screen) */}
       <div className={isHome ? 'block' : 'hidden lg:block'}>
         <AnnouncementBar onNavigate={handleNav} />
@@ -102,8 +102,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
 
       {/* MOBILE APP SUBPAGE HEADER (When not on Home) */}
       {!isHome && (
-        <div className="lg:hidden flex items-center justify-between px-2.5 py-2.5 bg-white border-b border-gray-100 shadow-xs">
-          <div className="flex items-center gap-1 min-w-0">
+        <div className="lg:hidden flex items-center justify-between px-2.5 py-2.5 bg-white border-b border-gray-100 shadow-xs w-full max-w-full min-w-0">
+          <div className="flex items-center gap-1 min-w-0 flex-1">
             <button
               onClick={() => {
                 if (window.history.length > 1) {
@@ -112,12 +112,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
                   handleNav('/');
                 }
               }}
-              className="p-2 -ml-1 text-gray-700 hover:text-[#257335] active:scale-90 rounded-full transition-transform cursor-pointer"
+              className="p-1.5 -ml-1 text-gray-700 hover:text-[#257335] active:scale-90 rounded-full transition-transform cursor-pointer flex-shrink-0"
               aria-label="Go Back"
             >
-              <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
             </button>
-            <h1 className="text-sm font-bold text-gray-900 truncate max-w-[210px]">
+            <h1 className="text-sm font-bold text-gray-900 truncate max-w-[180px] sm:max-w-[240px]">
               {getMobileTitle(currentPath)}
             </h1>
           </div>
@@ -125,20 +125,20 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
           <div className="flex items-center gap-1 flex-shrink-0">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="p-2 text-gray-700 hover:text-[#257335] rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+              className="p-1.5 text-gray-700 hover:text-[#257335] rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
               aria-label="Search"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
             <button
               onClick={() => handleNav('/wishlist')}
-              className="relative p-2 text-gray-700 hover:text-[#E87244] rounded-full hover:bg-orange-50 transition-colors cursor-pointer"
+              className="relative p-1.5 text-gray-700 hover:text-[#E87244] rounded-full hover:bg-orange-50 transition-colors cursor-pointer"
               aria-label="Wishlist"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
               {wishlist.length > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-[#E87244] text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-[#E87244] text-white text-[8px] font-black rounded-full flex items-center justify-center shadow-xs">
                   {wishlist.length}
                 </span>
               )}
@@ -146,12 +146,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
 
             <button
               onClick={() => setIsCartDrawerOpen(true)}
-              className="relative p-2 text-[#257335] hover:text-[#1E5C2B] rounded-full hover:bg-emerald-50 transition-colors cursor-pointer"
+              className="relative p-1.5 text-[#257335] hover:text-[#1E5C2B] rounded-full hover:bg-emerald-50 transition-colors cursor-pointer"
               aria-label="View Cart"
             >
-              <ShoppingBag className="w-5 h-5 stroke-[2.2]" />
+              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-[#257335] text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-xs animate-scaleIn">
+                <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-[#257335] text-white text-[8px] font-black rounded-full flex items-center justify-center shadow-xs animate-scaleIn">
                   {cartCount}
                 </span>
               )}
@@ -162,29 +162,32 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
 
       {/* MAIN HEADER CONTAINER (Desktop always, Mobile on Home) */}
       <div
-        className={`border-b border-gray-100 transition-all duration-200 ${
+        className={`border-b border-gray-100 transition-all duration-200 w-full max-w-full ${
           !isHome ? 'hidden lg:block' : ''
-        } ${isScrolled ? 'shadow-xs py-2 sm:py-2.5' : 'py-2.5 sm:py-3.5'}`}
+        } ${isScrolled ? 'shadow-xs py-2 sm:py-2.5' : 'py-2 sm:py-3.5'}`}
       >
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-3 sm:gap-4">
-          {/* Mobile Hamburger Button */}
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-gray-700 hover:text-[#257335] rounded-lg transition-colors cursor-pointer"
-            aria-label="Open mobile menu"
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 flex items-center justify-between gap-1.5 sm:gap-4 w-full min-w-0">
+          {/* Left: Mobile Hamburger & Logo */}
+          <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-1.5 text-gray-700 hover:text-[#257335] rounded-lg transition-colors cursor-pointer flex-shrink-0"
+              aria-label="Open mobile menu"
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+            </button>
 
-          {/* Official Brand Logo */}
-          <button
-            onClick={() => handleNav('/')}
-            className="flex items-center gap-2 cursor-pointer focus:outline-none"
-            aria-label="Mansha Texo Home"
-          >
-            <Logo size="md" />
-          </button>
+            {/* Official Brand Logo */}
+            <button
+              onClick={() => handleNav('/')}
+              className="flex items-center gap-2 cursor-pointer focus:outline-none min-w-0"
+              aria-label="Mansha Texo Home"
+            >
+              <Logo size="sm" className="sm:hidden" />
+              <Logo size="md" className="hidden sm:inline-flex" />
+            </button>
+          </div>
 
           {/* Desktop Search Bar Trigger */}
           <div className="hidden md:flex flex-1 max-w-md mx-6">
@@ -203,7 +206,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
           </div>
 
           {/* Right Action Icons (Track, Admin link, Account, Wishlist, Cart) */}
-          <div className="flex items-center gap-1 sm:gap-2.5">
+          <div className="flex items-center gap-1 sm:gap-2.5 flex-shrink-0">
             {/* Quick Track Order icon link */}
             <button
               onClick={() => handleNav('/track-order')}
@@ -217,7 +220,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
             {/* Admin Dashboard Quick Link */}
             <button
               onClick={() => handleNav('/admin')}
-              className={`flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+              className={`flex items-center gap-1 px-2 py-1.5 sm:px-2.5 sm:py-1.5 text-xs font-semibold rounded-full transition-all cursor-pointer ${
                 currentPath.startsWith('/admin')
                   ? 'bg-[#257335] text-white shadow-sm'
                   : 'bg-emerald-50 text-[#257335] hover:bg-[#257335] hover:text-white border border-emerald-200'
@@ -231,12 +234,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
             {/* Wishlist Button */}
             <button
               onClick={() => handleNav('/wishlist')}
-              className="relative p-2 text-gray-700 hover:text-[#E87244] rounded-full hover:bg-orange-50 transition-colors cursor-pointer"
+              className="relative p-1.5 sm:p-2 text-gray-700 hover:text-[#E87244] rounded-full hover:bg-orange-50 transition-colors cursor-pointer"
               aria-label="View Wishlist"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
               {wishlist.length > 0 && (
-                <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-[#E87244] text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-scaleIn shadow-sm">
+                <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-[#E87244] text-white text-[9px] sm:text-[10px] font-bold rounded-full flex items-center justify-center animate-scaleIn shadow-sm">
                   {wishlist.length}
                 </span>
               )}
@@ -245,20 +248,20 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
             {/* Shopping Cart Button */}
             <button
               onClick={() => setIsCartDrawerOpen(true)}
-              className="relative flex items-center gap-2 p-2 sm:px-3 sm:py-2 text-white bg-[#257335] hover:bg-[#1E5C2B] rounded-full shadow-sm transition-all cursor-pointer"
+              className="relative flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-2 text-white bg-[#257335] hover:bg-[#1E5C2B] rounded-full shadow-sm transition-all cursor-pointer"
               aria-label="View Cart"
             >
               <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
               <span className="hidden sm:inline text-xs font-semibold">Cart</span>
               {cartCount > 0 && (
-                <span className="w-5 h-5 bg-[#E87244] text-white text-xs font-bold rounded-full flex items-center justify-center shadow-inner">
+                <span className="w-4 h-4 sm:w-5 sm:h-5 bg-[#E87244] text-white text-[10px] sm:text-xs font-bold rounded-full flex items-center justify-center shadow-inner">
                   {cartCount}
                 </span>
               )}
             </button>
 
-            {/* User Account Dropdown */}
-            <div className="relative">
+            {/* User Account Dropdown (Desktop only - mobile users access via bottom nav Profile tab or drawer) */}
+            <div className="relative hidden sm:block">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                 className="p-1.5 sm:p-2 text-gray-700 hover:text-[#257335] rounded-full hover:bg-gray-100 transition-colors cursor-pointer flex items-center gap-1.5"
@@ -363,17 +366,17 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
 
         {/* MOBILE APP IN-HEADER SEARCH BAR (Only on mobile home view) */}
         {isHome && (
-          <div className="lg:hidden px-3 pt-2.5 pb-0.5">
+          <div className="lg:hidden px-2.5 sm:px-3 pt-2 pb-0.5 w-full max-w-full">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 bg-gray-100/80 active:bg-gray-200/80 border border-gray-200/80 rounded-2xl text-xs text-gray-500 shadow-inner transition-colors cursor-pointer"
+              className="w-full flex items-center justify-between px-3 py-2 bg-gray-100/80 active:bg-gray-200/80 border border-gray-200/80 rounded-2xl text-xs text-gray-500 shadow-inner transition-colors cursor-pointer gap-2"
               aria-label="Search items"
             >
-              <div className="flex items-center gap-2.5">
-                <Search className="w-4 h-4 text-[#257335]" />
-                <span className="text-gray-500 font-normal">Search bath mats, rugs, carpets...</span>
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <Search className="w-4 h-4 text-[#257335] flex-shrink-0" />
+                <span className="text-gray-500 font-normal truncate text-[11px] sm:text-xs">Search bath mats, rugs, carpets...</span>
               </div>
-              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md">
+              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md flex-shrink-0">
                 Search
               </span>
             </button>

@@ -47,8 +47,8 @@ export const MobileCategoryStories: React.FC<MobileCategoryStoriesProps> = ({
   ];
 
   return (
-    <div className="lg:hidden w-full bg-white border-b border-gray-100 py-2.5">
-      <div className="flex items-center gap-3.5 px-3 overflow-x-auto no-scrollbar scroll-smooth">
+    <div className="lg:hidden w-full max-w-full overflow-hidden bg-white border-b border-gray-100 py-2.5">
+      <div className="flex items-center gap-3.5 px-3 overflow-x-auto no-scrollbar scroll-smooth w-full max-w-full">
         {/* Special Deal Stories */}
         {specialItems.map((item) => {
           const Icon = item.icon;

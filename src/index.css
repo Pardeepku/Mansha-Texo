@@ -1,16 +1,33 @@
 @import "tailwindcss";
 
 @layer base {
-  html {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
     -webkit-tap-highlight-color: transparent;
     scroll-behavior: smooth;
   }
   
   body {
-    overflow-x: hidden;
     overscroll-behavior-y: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
   }
 }
 

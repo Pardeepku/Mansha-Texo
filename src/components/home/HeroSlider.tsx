@@ -50,7 +50,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ onNavigate }) => {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-[#18231C]"
+      className="relative w-full max-w-full overflow-hidden bg-[#18231C]"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >

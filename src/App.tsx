@@ -192,7 +192,7 @@ const AppContent: React.FC = () => {
   const isAdminView = currentPath.startsWith('/admin');
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1E293B]">
+    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1E293B] w-full max-w-full overflow-x-hidden relative">
       {/* Show Header & Navigation when not in Admin Mode */}
       {!isAdminView && (
         <Header
@@ -202,7 +202,7 @@ const AppContent: React.FC = () => {
       )}
 
       {/* Main Page Body with bottom clearance on mobile for bottom navigation */}
-      <main className={`flex-1 ${!isAdminView ? 'pb-16 lg:pb-0' : ''}`}>
+      <main className={`flex-1 w-full max-w-full overflow-x-hidden ${!isAdminView ? 'pb-16 lg:pb-0' : ''}`}>
         {renderRoute()}
       </main>
 

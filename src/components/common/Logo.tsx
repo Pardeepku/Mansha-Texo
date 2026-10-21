@@ -78,10 +78,10 @@ export const Logo: React.FC<LogoProps> = ({
 
       {/* Brand Typography */}
       {shouldShowText && (
-        <div className="flex flex-col text-left">
-          <div className="flex items-center gap-1">
+        <div className="flex flex-col text-left min-w-0">
+          <div className="flex items-center gap-1 min-w-0">
             <span
-              className={`font-serif font-bold tracking-tight uppercase ${
+              className={`font-serif font-bold tracking-tight uppercase truncate ${
                 textMap[size]
               } ${inverted ? 'text-white' : 'text-[#1E293B]'}`}
             >
@@ -95,7 +95,7 @@ export const Logo: React.FC<LogoProps> = ({
               )}
             </span>
             <span
-              className={`text-[9px] sm:text-[10px] font-semibold border rounded-full px-1 leading-none ${
+              className={`text-[9px] sm:text-[10px] font-semibold border rounded-full px-1 leading-none flex-shrink-0 ${
                 inverted ? 'border-white/40 text-white/70' : 'border-gray-400 text-gray-500'
               }`}
             >
@@ -103,7 +103,7 @@ export const Logo: React.FC<LogoProps> = ({
             </span>
           </div>
           <span
-            className={`text-[9px] sm:text-[10px] tracking-[0.18em] font-medium uppercase -mt-0.5 truncate max-w-[200px] sm:max-w-[260px] ${
+            className={`hidden sm:block text-[9px] sm:text-[10px] tracking-[0.18em] font-medium uppercase -mt-0.5 truncate max-w-[260px] ${
               inverted ? 'text-emerald-200/80' : 'text-[#257335]'
             }`}
           >
